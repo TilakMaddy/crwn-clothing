@@ -8,15 +8,15 @@ import { withRouter } from 'react-router-dom';
 // You could manually drill down the props but that would unnecessarily make many
 // components carry props tho they dont have any use with it
 
-const MenuItem = ({ title, imageUrl, size, hostory }) => (
+const MenuItem = ({ title, imageUrl, size, history, location, match, linkUrl }) => (
 
-  <div className={`menu-item ${size}`}>
+  <div className={`menu-item ${size}`} onClick={() => history.push(`${match.url}${title}`)}>
     <div style={{
       backgroundImage: `url(${imageUrl})`
     }} className="background-image">
     </div>
     <div className="content">
-      <h1 className="title"> { title } </h1>
+      <h1 className="title"> { title.toUpperCase() } </h1>
       <span className="subtitle"> SHOP NOW </span>
     </div>
   </div>
@@ -24,3 +24,4 @@ const MenuItem = ({ title, imageUrl, size, hostory }) => (
 )
 
 export default withRouter(MenuItem);
+
