@@ -4,8 +4,10 @@ import './directory.styles.scss';
 import MenuItem from '../menu-item/menu-item.component';
 
 class Directory extends Component {
+
   constructor() {
     super();
+
     this.state = {
       sections: [
         {
@@ -49,7 +51,7 @@ class Directory extends Component {
       <div className="directory-menu">
         {
           this.state.sections.map(({ id, title, imageUrl, size }) => (
-            <MenuItem id={ id } title={ title.toUpperCase() } size={ size } imageUrl={ imageUrl }/>
+            <MenuItem key={ id } title={ title.toUpperCase() } size={ size } imageUrl={ imageUrl }/>
           ))
         }
       </div>
