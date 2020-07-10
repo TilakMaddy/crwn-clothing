@@ -1,7 +1,14 @@
 import React from 'react';
 import './menu-item.styles.scss';
 
-const MenuItem = ({ title, imageUrl, size }) => (
+import { withRouter } from 'react-router-dom';
+
+// exportig withRouter gives access to history prop which otherwise eists only
+// on the component which <Route component={sample}> rnders , doesnt get pased to children
+// You could manually drill down the props but that would unnecessarily make many
+// components carry props tho they dont have any use with it
+
+const MenuItem = ({ title, imageUrl, size, hostory }) => (
 
   <div className={`menu-item ${size}`}>
     <div style={{
@@ -16,4 +23,4 @@ const MenuItem = ({ title, imageUrl, size }) => (
 
 )
 
-export default MenuItem;
+export default withRouter(MenuItem);
