@@ -24,11 +24,11 @@ class App extends Component {
       if (userAuth) {
         const userRef = await createUserProfileDocument(userAuth);
         userRef.onSnapshot(snap => {
-           this.setState({
-             currentUser:  {
-               id: snap.id, // document id is set to be same with user id
-               ...snap.data()
-             }
+          this.setState({
+            currentUser:  {
+              id: snap.id, // document id is set to be same with user id
+              ...snap.data()
+            }
            }, () => console.log(this.state));
         });
       } else {
