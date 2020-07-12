@@ -29,7 +29,7 @@ class App extends Component {
               id: snap.id, // document id is set to be same with user id
               ...snap.data()
             }
-           }, () => console.log(this.state));
+          }, () => console.log(this.state));
         });
       } else {
         this.setState({ currentUser: null });
