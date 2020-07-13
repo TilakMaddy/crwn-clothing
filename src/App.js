@@ -21,9 +21,11 @@ class App extends Component {
 
   componentDidMount() {
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
+      console.log("auth state changed", userAuth);
       if (userAuth) {
         const userRef = await createUserProfileDocument(userAuth);
         userRef.onSnapshot(snap => {
+          console.log("on snapshotted", snap);
           this.setState({
             currentUser:  {
               id: snap.id, // document id is set to be same with user id
@@ -35,6 +37,10 @@ class App extends Component {
         this.setState({ currentUser: null });
       }
     });
+  }
+
+  componentDidUpdate() {
+    console.log("app updated just now");
   }
 
   componentWillUnmount() {
