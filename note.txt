@@ -1,0 +1,2 @@
+Redux requires a lot of setup
+yarn add redux redux-logger react-redux
