@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch, Redirect } from 'react-router-dom'
 import { HomePage } from './pages/homepage/homepage.component';
 import ShopPage from './pages/shop/shop.component';
 import Header from './components/header/header.component';
-import './App.css';
 import SignInAndSignUp from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
 import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 import { connect } from 'react-redux';
-import { action } from './redux/user/user.actions';
+import { action as setCurrentUserAction } from './redux/user/user.actions';
+
+import './App.css';
 
 class App extends Component {
 
@@ -16,22 +17,24 @@ class App extends Component {
   componentDidMount() {
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
 
+      console.log("auth state has changed to ", userAuth);
+
+      const { setCurrentUser } = this.props;
+
       if (userAuth) {
 
         const userRef = await createUserProfileDocument(userAuth);
         userRef.onSnapshot(snap => {
 
-          this.props.setCurrentUser({
+          setCurrentUser({
             id: snap.id, // document id is set to be same with user id
             ...snap.data()
           });
 
         });
 
-      } else {
-        this.props.setCurrentUser(userAuth); // which is null
-
       }
+      setCurrentUser(userAuth);
     });
   }
 
@@ -50,7 +53,18 @@ class App extends Component {
         <Switch>
           <Route exact path='/' component={ HomePage }/>
           <Route path='/shop' component={ ShopPage } />
-          <Route path='/signin' component={ SignInAndSignUp } />
+
+          {/* render attribute equals a function which returns a component*/}
+          <Route
+            exact
+            path='/signin'
+            render={
+              () => this.props.currentUser ?
+                (<Redirect to='/' />)
+              :
+                (<SignInAndSignUp />)
+            }
+          />
         </Switch>
       </div>
     );
@@ -58,10 +72,16 @@ class App extends Component {
 
 }
 
-const mapDispatchToProps = dispatch => ({
-  setCurrentUser: user => dispatch(
-    action(user)
-  )
+const mapStateToProps = ({ user : { currentUser }}) => ({
+  currentUser
 });
 
-export default connect(null, mapDispatchToProps)(App);
+/*
+*dispatch(object) will pass the object to every reducer (redux does it)
+*/
+
+const mapDispatchToProps = dispatch => ({
+  setCurrentUser: user => dispatch(setCurrentUserAction(user))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

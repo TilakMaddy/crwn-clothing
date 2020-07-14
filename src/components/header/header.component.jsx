@@ -33,7 +33,12 @@ const Header = ({ currentUser }) => (
   </div>
 );
 
-// param state: top level root reducer
+/*
+they keys of the object returned will be passed in as props to
+the header component
+
+param state: top level root reducer
+*/
 const mapStateToProps = state => ({
   currentUser: state.user.currentUser
 });
