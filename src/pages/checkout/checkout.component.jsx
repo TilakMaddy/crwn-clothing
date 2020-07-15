@@ -13,6 +13,10 @@ const CheckoutPage = ({ cartItems, totalPrice }) => (
       <div className="header-block"><span>Price</span></div>
       <div className="header-block"><span>Remove</span></div>
     </div>
+
+    <div className="total">
+      <span>TOTAL : ${ totalPrice }</span>
+    </div>
   </div>
 );
 
