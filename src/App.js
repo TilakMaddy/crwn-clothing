@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { action as setCurrentUserAction } from './redux/user/user.actions';
 
 import './App.css';
+import { selectCurrentUser } from './redux/user/user.selectors';
 
 class App extends Component {
 
@@ -72,8 +73,8 @@ class App extends Component {
 
 }
 
-const mapStateToProps = ({ user : { currentUser }}) => ({
-  currentUser
+const mapStateToProps = state => ({
+  currentUser : selectCurrentUser(state)
 });
 
 /*
