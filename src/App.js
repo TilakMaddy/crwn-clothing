@@ -10,6 +10,7 @@ import { action as setCurrentUserAction } from './redux/user/user.actions';
 
 import './App.css';
 import { selectCurrentUser } from './redux/user/user.selectors';
+import CheckoutPage from './pages/checkout/checkout.component';
 
 class App extends Component {
 
@@ -54,6 +55,7 @@ class App extends Component {
         <Switch>
           <Route exact path='/' component={ HomePage }/>
           <Route path='/shop' component={ ShopPage } />
+          <Route path='/checkout' component={ CheckoutPage } />
 
           {/* render attribute equals a function which returns a component*/}
           <Route
