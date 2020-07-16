@@ -15,7 +15,14 @@ const addItemToCart = (cartItems, cartItemToAdd) => {
 };
 
 const clearItemFromCart = (cartItems, itemToClear) =>
-  cartItems.filter(item => item.id !== itemToClear.id)
+  cartItems.filter(item => item.id !== itemToClear.id);
 
+const removeItemFromCart = (cartItems, itemToRemove) =>
+  cartItems
+    .map(item => ({
+      ...item,
+      quantity: item.id === itemToRemove.id ? item.quantity - 1 : item.quantity
+    }))
+    .filter(item => item.quantity >= 1);
 
-export { addItemToCart, clearItemFromCart };
+export { addItemToCart, clearItemFromCart, removeItemFromCart };
