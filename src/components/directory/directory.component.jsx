@@ -7,7 +7,7 @@ import { createStructuredSelector } from 'reselect';
 import { selectDirectorySections } from '../../redux/directory/directory.selectors';
 
 
-// TODO convert this to a functional component we no longer store states in here
+// TODO convert this to a functional component since we no longer store states in here
 class Directory extends Component {
   render() {
     return (
