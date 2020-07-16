@@ -14,4 +14,8 @@ const addItemToCart = (cartItems, cartItemToAdd) => {
   return [ ...cartItems, { ...cartItemToAdd, quantity: 1 } ];
 };
 
-export { addItemToCart };
+const clearItemFromCart = (cartItems, itemToClear) =>
+  cartItems.filter(item => item.id !== itemToClear.id)
+
+
+export { addItemToCart, clearItemFromCart };
