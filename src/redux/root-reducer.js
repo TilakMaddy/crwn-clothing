@@ -1,5 +1,3 @@
-import userReducer from "./user/user.reducer";
-import cartReducer from "./cart/cart.reducer";
 import { combineReducers } from "redux";
 import { persistReducer } from 'redux-persist';
 
@@ -8,6 +6,10 @@ import storage from 'redux-persist/lib/storage';
 
 // this gives us access to sessionStorage
 import sessionStorage from 'redux-persist/lib/storage/session';
+
+import userReducer from "./user/user.reducer";
+import cartReducer from "./cart/cart.reducer";
+import directoryReducer from "./directory/directory.reducer";
 
 const persistConfig = {
   key: 'root', // at what point of the reducer object do you want to start storing stuff
@@ -24,6 +26,7 @@ const persistConfig = {
 const rootReducer =  combineReducers({
   user: userReducer,
   cart: cartReducer,
+  directory: directoryReducer
 });
 
 export default persistReducer(persistConfig, rootReducer);
