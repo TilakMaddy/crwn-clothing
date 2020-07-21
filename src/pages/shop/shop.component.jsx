@@ -11,7 +11,13 @@ import WithSpinner from '../../components/with-spinner/with-spinner.component';
 const CollectionsOverviewWithSpinner = WithSpinner(CollectionsOverview);
 const CollectionPageWithSpinner = WithSpinner(CollectionPage);
 
-
+/**
+ * In this case we used a mix of redux state management + pure React JS state
+ * we didnt actually pass down mapStateToProps.
+ * CollectionsPage and CollectionsOverview page need the collecions to NOT be null
+ * in order to render succesfully . Hence we wait to get the data beofre we set the load
+ * state to false which eventually renders CollectionsPage and CollectionsOVerview
+ */
 class ShopPage extends React.Component {
 
   state = {
@@ -60,3 +66,4 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(null, mapDispatchToProps)(ShopPage);
+
