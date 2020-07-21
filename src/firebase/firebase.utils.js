@@ -21,12 +21,8 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
     return;
 
   const userRef = firestore.doc(`users/${userAuth.uid}`);
-  const collectionRef = firestore.collection('users');
 
   const snapshot = await userRef.get();
-  const collectionSnapshot = await collectionRef.get();
-
-  console.log({ collectionSnapshot });
 
   if(!snapshot.exists) {
     console.log("snap doesnt exist", userAuth, additionalData);
@@ -52,9 +48,21 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
 
 firebase.initializeApp(config);
 
+export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => {
+  const collectionRef = firestore.collection(collectionKey);
+  console.log(collectionRef);
+
+  const batch = firestore.batch();
+  objectsToAdd.forEach(obj => {
+    const newDocRef = collectionRef.doc();
+    batch.set(newDocRef, obj);
+  });
+
+  return await batch.commit();
+}
+
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
-
 
 const provider = new firebase.auth.GoogleAuthProvider();
 //provider.setCustomParameters({ 'prompt' : 'select_account' });

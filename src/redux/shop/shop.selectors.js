@@ -7,6 +7,7 @@ export const selectCollections = createSelector(
   shop => shop.collections
 );
 
+// returns the object as an ARRAY
 export const selectCollectionsForPreview = createSelector(
   [selectCollections],
   collections => Object.keys(collections).map(key => collections[key])
@@ -53,6 +54,8 @@ Memoize does the same idea of memoization as reselect does for our selectors, ex
 By wrapping this function is memoize, we're saying that whenever this function gets called and receives collectionUrlParam, I want to memoize the return of this function (in this case we return a selector). If this function gets called again with the same collectionUrlParam, don't rerun this function because we'll return the same value as last time, which we've memoized so just return the selector that's been stored.
 
 
+
 */
 
 
+//* Not having the last function memoized will probably N o t  affect the app coz its O(1) access anyways
