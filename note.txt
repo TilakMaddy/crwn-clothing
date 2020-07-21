@@ -1,2 +1,4 @@
 Redux requires a lot of setup
 yarn add redux redux-logger react-redux
+
+Highe order component example -  refer https://github.com/ZhangMYihua/higher-order-components-explained
