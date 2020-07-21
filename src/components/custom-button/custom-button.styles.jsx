@@ -9,11 +9,13 @@ const getButtonStyles = props => {
     return invertedButtonStyle;
 
   }
-  return styled.css``;
+
 };
 
+
+
 // inverted button specifics only
-export const invertedButtonStyle = css`
+const invertedButtonStyle = css`
   background-color: white;
   color: black;
   border: 1px solid black;
@@ -25,11 +27,12 @@ export const invertedButtonStyle = css`
 `;
 
 // google sign in specific style
-export const googleSignInStyle = css`
+const googleSignInStyle = css`
   background: #4285f4;
   color:white;
   &:hover {
     background: #357ae8;
+    color:white;
     border: none;
   }
 `;
@@ -60,5 +63,6 @@ export const CustomButtonContainer = styled.button`
   }
 
   ${getButtonStyles}
+
 
 `;
