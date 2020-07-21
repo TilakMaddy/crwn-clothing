@@ -3,41 +3,24 @@ import './shop.styles.scss';
 import { Route } from 'react-router-dom'
 import CollectionsOverview from '../../components/collections-overview/collections-overview.component';
 import CollectionPage from '../collection/collection.component';
-import { firestore, convertCollectionsSnapshotToMap } from '../../firebase/firebase.utils';
-import { updateCollection } from '../../redux/shop/shop.actions';
 import { connect } from 'react-redux';
 import WithSpinner from '../../components/with-spinner/with-spinner.component';
+import { selectCollectionIsFetching } from '../../redux/shop/shop.selectors';
+import { fetchCollectionsStartAsync } from '../../redux/shop/shop.actions';
+import { createStructuredSelector } from 'reselect';
 
 const CollectionsOverviewWithSpinner = WithSpinner(CollectionsOverview);
 const CollectionPageWithSpinner = WithSpinner(CollectionPage);
 
-/**
- * In this case we used a mix of redux state management + pure React JS state
- * we didnt actually pass down mapStateToProps.
- * CollectionsPage and CollectionsOverview page need the collecions to NOT be null
- * in order to render succesfully . Hence we wait to get the data beofre we set the load
- * state to false which eventually renders CollectionsPage and CollectionsOVerview
- */
 class ShopPage extends React.Component {
 
-  state = {
-    loading: true
-  }
-
-  unsubscribeFromSnapshot = null;
-
   componentDidMount() {
-    const collectionRef = firestore.collection('collections');
-    const { updateCollections } = this.props;
-
-    this.unsubscribeFromSnapshot = collectionRef.onSnapshot(async snapshot => {
-      updateCollections(convertCollectionsSnapshotToMap(snapshot));
-      this.setState({ loading: false });
-    });
+    const { fetchCollectionsStartAsync } = this.props;
+    fetchCollectionsStartAsync();
   }
 
   render() {
-    const { match } = this.props;
+    const { match, isFetching } = this.props;
     return (
       <div className="shop-page">
         <Route
@@ -45,14 +28,14 @@ class ShopPage extends React.Component {
           path={ `${match.path}` }
           render={
             (props) =>
-              <CollectionsOverviewWithSpinner {...props} isLoading={ this.state.loading } />
+              <CollectionsOverviewWithSpinner {...props} isLoading={ isFetching } />
           }
         />
         <Route
           path={ `${match.path}/:collectionId` }
           render={
             (props) =>
-              <CollectionPageWithSpinner {...props} isLoading={ this.state.loading } />
+              <CollectionPageWithSpinner {...props} isLoading={ isFetching } />
           }
         />
       </div>
@@ -61,9 +44,18 @@ class ShopPage extends React.Component {
 
 }
 
-const mapDispatchToProps = dispatch => ({
-  updateCollections: collectionsMap => dispatch(updateCollection(collectionsMap))
+const mapStateToProps = createStructuredSelector({
+  isFetching: selectCollectionIsFetching
 });
 
-export default connect(null, mapDispatchToProps)(ShopPage);
+
+const mapDispatchToProps = dispatch => ({
+  fetchCollectionsStartAsync: () => dispatch(fetchCollectionsStartAsync())
+  // even though fetchCollectionsStartAsync() returns a function and not an
+  // action object we are able to do this because of redux-think
+  // redux think will detect this and call the function that it returns and
+  // passes the first argument as `dispatch`
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ShopPage);
 

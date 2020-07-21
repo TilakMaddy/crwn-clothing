@@ -2,3 +2,9 @@ Redux requires a lot of setup
 yarn add redux redux-logger react-redux
 
 Higher order component example -  refer https://github.com/ZhangMYihua/higher-order-components-explained
+
+IMPORTANT:
+----------
+If redux-thunk middleware is enabled, any time you attempt to dispatch a function
+instead of an object, the middleware will call the function with the dispatch
+method itself as the first argument
