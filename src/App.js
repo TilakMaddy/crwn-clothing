@@ -4,14 +4,13 @@ import { HomePage } from './pages/homepage/homepage.component';
 import ShopPage from './pages/shop/shop.component';
 import Header from './components/header/header.component';
 import SignInAndSignUp from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
-import { auth, createUserProfileDocument, addCollectionAndDocuments } from './firebase/firebase.utils';
+import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 import { connect } from 'react-redux';
 import { action as setCurrentUserAction } from './redux/user/user.actions';
 
 import './App.css';
 import { selectCurrentUser } from './redux/user/user.selectors';
 import CheckoutPage from './pages/checkout/checkout.component';
-import { selectCollectionsForPreview } from './redux/shop/shop.selectors';
 
 class App extends Component {
 
@@ -22,7 +21,7 @@ class App extends Component {
 
       console.log("auth state has changed to ", userAuth);
 
-      const { setCurrentUser, collectionsArray } = this.props;
+      const { setCurrentUser } = this.props;
 
       if (userAuth) {
 
