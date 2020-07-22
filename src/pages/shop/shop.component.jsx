@@ -1,23 +1,23 @@
 import React from 'react';
 import './shop.styles.scss';
 import { Route } from 'react-router-dom'
-import CollectionsOverview from '../../components/collections-overview/collections-overview.component';
 import CollectionPage from '../collection/collection.component';
 import { connect } from 'react-redux';
 import WithSpinner from '../../components/with-spinner/with-spinner.component';
 import { selectCollectionIsFetching, selectIsCollectionsLoaded } from '../../redux/shop/shop.selectors';
 import { fetchCollectionsStartAsync } from '../../redux/shop/shop.actions';
 import { createStructuredSelector } from 'reselect';
+import { CollectionsOverviewContainer } from '../../components/collections-overview/collections-overview.container';
 
-const CollectionsOverviewWithSpinner = WithSpinner(CollectionsOverview);
 const CollectionPageWithSpinner = WithSpinner(CollectionPage);
 
 class ShopPage extends React.Component {
 
-
+  //*The reason you don't fetch api in the constructor is becoz the constructor
+  //* will called multiple times during render unlike componentDidMount()
 
   /*UNSAFE_componentWillMount() {
-
+    This function is not recommened after v16 coz it may be called more than once
   }*/
 
   componentDidMount() {
@@ -26,16 +26,17 @@ class ShopPage extends React.Component {
   }
 
   render() {
-    const { match, isFetching, isCollectionsLoaded } = this.props;
+    const { match, /*isFetching*/ isCollectionsLoaded } = this.props;
     return (
       <div className="shop-page">
         <Route
           exact
           path={ `${match.path}` }
-          render={
-            (props) =>
-              <CollectionsOverviewWithSpinner {...props} isLoading={ isFetching } />
-          }
+          // render={
+          //   (props) =>
+          //     <CollectionsOverviewWithSpinner {...props} isLoading={ isFetching } />
+          // }
+          component={ CollectionsOverviewContainer }
         />
         <Route
           path={ `${match.path}/:collectionId` }
