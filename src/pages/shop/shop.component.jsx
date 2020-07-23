@@ -3,7 +3,7 @@ import './shop.styles.scss';
 import { Route } from 'react-router-dom';
 import CollectionPageContainer from '../collection/collection.container';
 import { connect } from 'react-redux';
-import { fetchCollectionsStartAsync } from '../../redux/shop/shop.actions';
+import { fetchCollectionsStart } from '../../redux/shop/shop.actions';
 import CollectionsOverviewContainer from '../../components/collections-overview/collections-overview.container';
 
 // const CollectionPageWithSpinner = WithSpinner(CollectionPage);
@@ -18,8 +18,8 @@ class ShopPage extends React.Component {
   }*/
 
   componentDidMount() {
-    const { fetchCollectionsStartAsync } = this.props;
-    fetchCollectionsStartAsync();
+    const { fetchCollectionsStart } = this.props;
+    fetchCollectionsStart();
   }
 
   render() {
@@ -43,11 +43,7 @@ class ShopPage extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  fetchCollectionsStartAsync: () => dispatch(fetchCollectionsStartAsync())
-  // even though fetchCollectionsStartAsync() returns a function and not an
-  // action object we are able to do this because of redux-think
-  // redux-thunk will detect this and call the function that it returns and
-  // passes the first argument as `dispatch`
+  fetchCollectionsStart: () => dispatch(fetchCollectionsStart())
 });
 
 export default connect(null, mapDispatchToProps)(ShopPage);

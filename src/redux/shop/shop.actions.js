@@ -15,10 +15,6 @@ export const fetchCollectionsFailure = message => ({
   payload: message
 })
 
-/**
- * Owing to redux thunk we can no cause dispatch actions asynchronously
- * ❤️
- */
 export const fetchCollectionsStartAsync = () => {
   return dispatch => {
     const collectionRef = firestore.collection('collections');
