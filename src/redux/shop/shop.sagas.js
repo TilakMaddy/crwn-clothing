@@ -5,7 +5,7 @@
 // yield function inside the generator give back the control to the middleaware
 // will make more sense as you write the code
 
-import { takeEvery, call, put } from 'redux-saga/effects';
+import { takeEvery, takeLatest, call, put } from 'redux-saga/effects';
 import { firestore, convertCollectionsSnapshotToMap } from '../../firebase/firebase.utils';
 
 import { fetchCollectionsSuccess, fetchCollectionsFailure } from './shop.actions';
@@ -42,7 +42,7 @@ export function* fetchCollectionsAsync() {
 
 // this function is invoked in store.js using sagaMiddleware.run(..)
 export function* fetchCollectionsStart() {
-  yield takeEvery(
+  yield takeLatest(
     ShopActionTypes.FETCH_COLLECTIONS_START, // wait for this action
     fetchCollectionsAsync  // and fire this generator defined above
   );
