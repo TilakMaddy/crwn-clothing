@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Crwn Clothing",
+  "name": "Shopping store with minimal features to buy and sell",
   "icons": [
     {
       "src": "favicon.ico",
